@@ -1,154 +1,127 @@
 @use './reset';
 
-$brk-mobile: 375px;
-$brk-desktop: 1440px;
+$brk: 600px;
 
 :root {
-  --brk-mobile: #{$brk-mobile};
-  --brk-desktop: #{$brk-desktop};
-
   /* Colors */
-  --clr-primary-900: hsl(158, 36%, 37%);
   --clr-primary-100: hsl(30, 38%, 92%);
+  --clr-accent-500: hsl(158, 36%, 37%);
+  --clr-accent-900: hsl(158, 36%, 20%);
 
-  --clr-neutral-900: hsl(212, 21%, 14%);
-  --clr-neutral-500: hsl(228, 12%, 48%);
   --clr-neutral-100: hsl(0, 0%, 100%);
+  --clr-neutral-500: hsl(228, 12%, 48%);
+  --clr-neutral-900: hsl(212, 21%, 14%);
 
   /* Typography */
-  --fs-body: 14px;
-  --fs-title: calc(var(--fs-body) * 2);
+  --fs-body: 1rem;
+  --fs-title: 2rem;
+
   --ff-title: 'Fraunces', sans-serif;
   --ff-body: 'Montserrat', sans-serif;
+
   --fw-medium: 500;
   --fw-bold: 700;
-}
-
-.desktop-only {
-  display: none;
-}
-
-@media (min-width: $brk-mobile) {
-  .mobile-only {
-    display: none;
-  }
-
-  .desktop-only {
-    display: block;
-  }
 }
 
 body {
   display: grid;
   place-content: center;
-  height: 100vh;
+  padding: 1rem;
+
   background-color: var(--clr-primary-100);
+  color: var(--clr-neutral-500);
+
   font-size: var(--fs-body);
   font-family: var(--ff-body);
 }
 
-h2 {
-  font-size: var(--fs-title);
-  line-height: 1;
-  font-weight: var(--fw-bold);
-  color: var(--clr-neutral-900);
-  font-family: var(--ff-title);
-  margin-bottom: 1rem;
-}
-
-s {
-  text-decoration: line-through;
-}
-
 .card {
-  width: min(calc(var(--brk-mobile) - 2rem), calc(100% - 2rem));
-  margin-inline: auto;
+  display: grid;
+  border-radius: 1rem;
+  overflow: hidden;
+  background-color: var(--clr-neutral-100);
 
-  background-color: white;
-
-  border-radius: 14px;
-  overflow: clip;
-
-  color: var(--clr-neutral-400);
-
-  display: flex;
-  flex-direction: column;
-
-  line-height: 1.5;
-
-  &__img {
-    aspect-ratio: 16 / 10;
+  &__img img {
     object-fit: cover;
   }
 
   &__content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    display: grid;
+    gap: 1rem;
     padding: 1.5rem;
-    color: var(--clr-neutral-500);
+  }
 
-    .product-type {
-      text-transform: uppercase;
-      letter-spacing: 0.6ch;
+  &__category {
+    text-transform: uppercase;
+    letter-spacing: 0.6ch;
+  }
+
+  &__title {
+    font-size: var(--fs-title);
+    line-height: 1;
+    font-weight: var(--fw-bold);
+    color: var(--clr-neutral-900);
+    font-family: var(--ff-title);
+  }
+
+  &__prices {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+
+    .card__old-price {
+      text-decoration: line-through;
     }
 
-    h2 {
-      margin-bottom: 0.2rem;
+    .card__price {
+      font-family: var(--ff-title);
+      font-weight: var(--fw-bold);
+      font-size: var(--fs-title);
+      color: var(--clr-accent-500);
+    }
+  }
+
+  &__button {
+    border-radius: 0.5rem;
+    padding: 1em;
+    border: none;
+    background-color: var(--clr-accent-500);
+    color: var(--clr-neutral-100);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.7rem;
+
+    transition: background-color 250ms ease;
+    cursor: pointer;
+
+    &::before {
+      content: url('./images/icon-cart.svg');
+      display: inline-block;
+      height: 20px;
     }
 
-    .prices {
-      display: flex;
-      align-items: center;
-      column-gap: 1rem;
-      flex-wrap: wrap;
-
-      .old-price {
-        text-decoration: line-through;
-      }
-
-      .price {
-        font-family: var(--ff-title);
-        font-weight: var(--fw-bold);
-        font-size: var(--fs-title);
-        color: var(--clr-primary-900);
-      }
-    }
-
-    button {
-      display: block;
-      width: 100%;
-
-      text-align: center;
-      border-radius: 0.5rem;
-      padding: 1em;
-      background-color: var(--clr-primary-900);
+    &:is(:hover, :focus) {
+      background-color: var(--clr-neutral-900);
       color: var(--clr-neutral-100);
-      margin-block-start: auto;
-
-      .icon {
-        margin-inline-end: 0.5em;
-      }
     }
   }
 }
 
-@media (min-width: $brk-mobile) {
+@media (min-width: $brk) {
   .card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: min(calc(650px - 2rem), calc(100% - 2rem));
-    line-height: 1.7;
+    grid-template-columns: 1.1fr 1fr;
+    max-width: 700px;
 
-    &__img {
-      aspect-ratio: 10 / 16;
+    &__img img {
       height: 100%;
     }
 
     &__content {
-      padding: 2.2rem;
+      padding: 2rem;
       gap: 2rem;
-      justify-content: stretch;
     }
   }
 }
